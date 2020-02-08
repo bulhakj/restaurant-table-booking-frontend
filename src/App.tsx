@@ -1,25 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import SignIn from "./containers/SingIn/SignIn"
 import { Box } from '@material-ui/core/';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Security, ImplicitCallback } from '@okta/okta-react';
+import { withAuth } from '@okta/okta-react';
+import { Auth0Provider } from './contexts/auth0-context';
+import { BrowserRouter } from 'react-router-dom';
 
 const config = {
-  issuer: 'https://${yourOktaDomain}/oauth2/default',
+  issuer: `${process.env.REACT_APP_OKTA_DOMAIN}`,
   redirectUri: window.location.origin + '/implicit/callback',
-  clientId: '{clientId}',
+  clientId: `${process.env.REACT_APP_CLIENT_ID}`,
   pkce: true
 }
 
-
 const App = () => {
-  useEffect(() => {
-    console.log(process.env.REACT_APP_CLIENT_ID)
-  })
   return (
-    <div>
-      <SignIn />
-    </div>
+    <Auth0Provider>
+      <BrowserRouter>
+        <div>ELUWA</div>
+      </BrowserRouter>
+    </Auth0Provider>
   
   );
 }
